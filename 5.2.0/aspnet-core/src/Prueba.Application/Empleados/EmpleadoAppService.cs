@@ -4,6 +4,7 @@ using Prueba.Empleados.DTO;
 using Prueba.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,10 +20,10 @@ namespace Prueba.Empleados
             _objectMapper = objectMapper;
         }
 
-        public void Create(CreateEmpleadoInput input)
+        public async Task Create(CreateEmpleadoInput input)
         {            
             var Empleado = _objectMapper.Map<Empleado>(input);
-            _empleadoManager.Create(Empleado);
+            await _empleadoManager.Create(Empleado);
         }
 
         public void Delete(DeleteEmpleadoInput input)
@@ -33,18 +34,21 @@ namespace Prueba.Empleados
         public GetEmpleadoOutput GetEmpleadoById(GetEmpleadoInput input)
         {
             var getEmpleado = _empleadoManager.GetEmpleadoById(input.Id);
-            GetEmpleadoOutput output = Mapper.Map<Empleados, GetEmpleadoOutput>(getEmpleado);
+           GetEmpleadoOutput output = _objectMapper.Map<GetEmpleadoOutput>(getEmpleado);
             return output;
         }
 
         public IEnumerable<GetEmpleadoOutput> ListAll()
         {
-            throw new NotImplementedException();
+            var getAll = _empleadoManager.GetAllList().ToList();
+            List<GetEmpleadoOutput> output = _objectMapper.Map<List<GetEmpleadoOutput>>(getAll);
+            return output;
         }
 
         public void Update(UpdateEmpleadoInput input)
         {
-            throw new NotImplementedException();
+            Empleado output = _objectMapper.Map<Empleado>(input);
+            _empleadoManager.Update(output); 
         }
     }
     
