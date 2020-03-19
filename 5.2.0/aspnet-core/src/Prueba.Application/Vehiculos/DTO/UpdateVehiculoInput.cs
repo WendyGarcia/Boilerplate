@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Prueba.Vehiculos.DTO
 {
-    public class GetVehiculoOutput
+    public class UpdateVehiculoInput
     {
         public int Id { get; set; }
         public string Placa { get; set; }
